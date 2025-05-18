@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Glammy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Glammy</h1>
+    <canvas id="tryon-canvas" width="400" height="600"></canvas>
+    <script>
+        const baseAvatarUrl = "{{ url_for('static', filename='images/cartoon_avatar_testing.png') }}";
+    </script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
