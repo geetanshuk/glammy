@@ -8,10 +8,20 @@
 <body>
     <h1>Glammy</h1>
     <canvas id="tryon-canvas" width="400" height="600"></canvas>
+
+    <!-- Load Fabric.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+
+    <!-- Load MediaPipe Pose -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js"></script>
+
+    <!-- Pass variables to JS -->
     <script>
-        const baseAvatarUrl = "{{ url_for('static', filename='images/cartoon_avatar_testing.png') }}";
+        const baseAvatarUrl = "{{ url_for('static', filename='images/realistic_avatar_testing.webp') }}";
+        const clothingUrl = "{{ url_for('static', filename='images/leather_jacket_testing.png') }}";
     </script>
 
+    <!-- Load your main script -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
