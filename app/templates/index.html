@@ -17,11 +17,14 @@
 
     <!-- Pass variables to JS -->
     <script>
-        const baseAvatarUrl = "{{ url_for('static', filename='images/realistic_avatar_testing.webp') }}";
-        const clothingUrl = "{{ url_for('static', filename='images/leather_jacket_testing.png') }}";
+        const baseAvatarUrl = "{{ url_for('static', filename='images/realistic_avatar_testing.webp_result.png') }}";
+        const clothingUrl = "{{ url_for('static', filename='images/leather_jacket_testing.png_result.png') }}";
     </script>
 
     <!-- Load your main script -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+
+    
 </body>
 </html>
