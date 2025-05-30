@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Glammy</title>
+    <title>Glitz</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Glammy</h1>
+    <h1>Glitz</h1>
     <canvas id="tryon-canvas" width="400" height="600"></canvas>
 
     <!-- Load Fabric.js -->
@@ -17,8 +17,8 @@
 
     <!-- Pass variables to JS -->
     <script>
-        const baseAvatarUrl = "{{ url_for('static', filename='images/realistic_avatar_testing.webp_result.png') }}";
-        const clothingUrl = "{{ url_for('static', filename='images/leather_jacket_testing.png_result.png') }}";
+        const baseAvatarUrl = "{{ url_for('static', filename='images/realistic_avatar_testing_result.png') }}";
+        const clothingUrl = "{{ url_for('static', filename='images/leather_jacket_testing_result.png') }}";
     </script>
 
     <!-- Load your main script -->
