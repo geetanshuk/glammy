@@ -2,12 +2,13 @@ import cv2
 import numpy as np
 import mediapipe as mp
 import os
+import json
+from PIL import Image
+
 
 def detect_key_landmarks(image_name):
     # Load the image with alpha channel preserved
-    image_path = "app/static/images/" + image_name 
-    image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
-
+    image = cv2.imread(image_name, cv2.IMREAD_UNCHANGED)
 
     # Separate channels if alpha exists
     if image.shape[2] == 4:
@@ -30,8 +31,17 @@ def detect_key_landmarks(image_name):
 
     bgr = np.ascontiguousarray(bgr)
 
+    landmarks = []
+
     # Draw landmarks on BGR image
     if results.pose_landmarks:
+        for lm in results.pose_landmarks.landmark:
+            landmarks.append({
+            'x': lm.x,
+            'y': lm.y,
+            'z': lm.z,
+            'visibility': lm.visibility
+        })
         mp_drawing.draw_landmarks(
             bgr,
             results.pose_landmarks,
@@ -45,65 +55,78 @@ def detect_key_landmarks(image_name):
         output = bgr
 
     image_name = os.path.splitext(image_name)[0]
+
+    base_name = os.path.basename(image_name)
+
+    # save json
+    json_path = os.path.join("app/static/data", f"{base_name}_landmarks.json")
+    with open(json_path, 'w') as f:
+        json.dump(landmarks, f)
+
     # Save the result
-    cv2.imwrite("app/static/images/" + image_name + "_result.png", output)
+    cv2.imwrite(image_name + "_result.png", output)
 
-    return results, output, alpha
+    return results, output, alpha, json_path
 
-# def remove_background(image):
-#     mp_selfie_segmentation = mp.solutions.selfie_segmentation
-#     selfie_segmentation = mp_selfie_segmentation.SelfieSegmentation(model_selection=0)
 
-#     results = selfie_segmentation.process(image)
-#     mask = results.segmentation_mask
-
-#     h, w = image.shape[:2]
+def overlay_top(avatar_json, clothing_json, avatar_img, clothing_img):
+    with open(avatar_json) as f:
+        avatar_landmark = json.load(f)
+    with open(clothing_json) as f:
+        clothing_landmark = json.load(f)
     
-#     rgba_image = np.zeros((h, w, 4), dtype=np.uint8)
-#     rgba_image[:, :, :3] = image
+    # left shoulder is always 11 in mediapipe
+    # getting the left shoulder of the avatar image
+    left_shoulder_av = avatar_landmark[11]
+    x_val_av = left_shoulder_av["x"]
+    y_val_av = left_shoulder_av["y"]
+    z_val_av = left_shoulder_av["z"]
 
-#     # Set alpha channel: 255 (opaque) where condition True, else 0 (transparent)
-#     rgba_image[:, :, 3] = (mask > 0.5).astype(np.uint8) * 255
+    # getting the left shoulder of the clothing image
+    left_shoulder_cl = clothing_landmark[11]
+    x_val_cl = left_shoulder_cl["x"]
+    y_val_cl = left_shoulder_cl["y"]
+    z_val_cl = left_shoulder_cl["z"]
 
-#     cv2.imwrite("app/static/images/no_background.png", rgba_image)
-#     return rgba_image
+    # resize clothing image based on the avatar image
+    width_av, height_av = avatar_img.size
+    width_cl, height_cl = clothing_img.size
 
+    factor = width_av / width_cl
+    clothing_img = clothing_img.resize((width_av, int(factor * height_cl)))
 
-def overlay_image(background, foreground):
-    # Ensure 4 channels
-    if background.shape[2] != 4:
-        background = cv2.cvtColor(background, cv2.COLOR_BGR2BGRA)
-    if foreground.shape[2] != 4:
-        foreground = cv2.cvtColor(foreground, cv2.COLOR_BGR2BGRA)
+    width_cl, height_cl = clothing_img.size
 
-    # Resize foreground to match background
-    foreground = cv2.resize(foreground, (background.shape[1], background.shape[0]))
+    # normalized * width gives you the pixel coordinates
+    avatar_px_x = x_val_av * width_av
+    avatar_px_y = y_val_av * height_av
 
-    # Extract alpha masks
-    alpha_fg = foreground[:, :, 3] / 255.0
-    alpha_bg = background[:, :, 3] / 255.0
+    clothing_px_x = x_val_cl * width_cl
+    clothing_px_y = y_val_cl * height_cl
 
-    # Blend each channel
-    result = np.zeros_like(background, dtype=np.uint8)
-    for c in range(3):  # BGR channels
-        result[:, :, c] = (
-            foreground[:, :, c] * alpha_fg +
-            background[:, :, c] * alpha_bg * (1 - alpha_fg)
-        ).astype(np.uint8)
+    # Compute offset to align the landmarks
+    offset_x = avatar_px_x - clothing_px_x
+    offset_y = avatar_px_y - clothing_px_y
+    
+    # pasting the image on top of the other
+    avatar_img.paste(clothing_img, (int(offset_x), int(offset_y)), mask = clothing_img)
 
-    # Blend alpha channel
-    result[:, :, 3] = ((1 - (1 - alpha_fg) * (1 - alpha_bg)) * 255).astype(np.uint8)
+    avatar_img.show()
+ 
 
-    return result
 
 if __name__ == "__main__":
-    avatar_landmark, image_avatar, alpha_background = detect_key_landmarks("realistic_avatar_testing.webp")
-    leather_jacket_landmark, image_jacket, alpha_foreground = detect_key_landmarks("leather_jacket_testing.png")
-    
-    #remove_background(image_jacket)
+    avatar_image_path = "app/static/images/realistic_avatar_testing.webp"
+    clothing_image_path = "app/static/images/leather_jacket_testing.png"
 
-    # result = overlay_image(image_avatar, image_jacket)
-    # cv2.imshow("result", result)
+    avatar_landmark, image_avatar, alpha_background, json_avatar = detect_key_landmarks(avatar_image_path)
+    leather_jacket_landmark, image_jacket, alpha_foreground, json_clothing = detect_key_landmarks(clothing_image_path)
+
+    avatar_img = Image.open(avatar_image_path)
+    clothing_img = Image.open(clothing_image_path)
+
+    overlay_top(json_avatar, json_clothing, avatar_img, clothing_img)
+
 
     
     
