@@ -1,33 +1,70 @@
-const base = document.getElementById('base-avatar');
-let clothingImg = null;
-const canvas = new fabric.Canvas('tryon-canvas');;
-const ctx = canvas.getContext('2d');
+function dresses() {
+    const dressContainer = document.getElementById('dress-options');
+    const topsContainer = document.getElementById('top-options');
+    const shortsContainer = document.getElementById('shorts-options');
 
+    dressContainer.classList.toggle('hidden');
+    topsContainer.classList.add('hidden');
+    shortsContainer.classList.add('hidden');
+}
 
-// Load avatar and detect pose via Flask
-fabric.Image.fromURL(baseAvatarUrl, function(avatarImg) {
-    avatarImg.set({
-        left: 0,
-        top: 0,
-        selectable: false
-    });
-    avatarImg.scaleToWidth(canvas.width);
-    canvas.add(avatarImg);
-});
+function tops() {
+    const dressContainer = document.getElementById('dress-options');
+    const topsContainer = document.getElementById('top-options');
+    const shortsContainer = document.getElementById('shorts-options');
 
-// Load clothing image
-fabric.Image.fromURL(clothingUrl, function(img) {
-    clothingImg = img;
-    clothingImg.set({
-        left: 120,
-        top: 200,
-        hasControls: false,
-        hasBorders: false,
-        selectable: true,
-        originX: 'center',
-        originY: 'center'
-    });
-    clothingImg.scale(0.4);
-    canvas.add(clothingImg);
-});
+    topsContainer.classList.toggle('hidden');
+    dressContainer.classList.add('hidden');
+    shortsContainer.classList.add('hidden');
+}
+
+function shorts() {
+    const dressContainer = document.getElementById('dress-options');
+    const topsContainer = document.getElementById('top-options');
+    const shortsContainer = document.getElementById('shorts-options');
+
+    shortsContainer.classList.toggle('hidden');
+    dressContainer.classList.add('hidden');
+    topsContainer.classList.add('hidden');
+}
+
+function selectDress(dressId) {
+    const dressOverlay = document.getElementById('dress-overlay');
+
+    const dressImages = {
+        'dress1': '/static/images/black_knotted_h&m_fitted.png'
+        // add more dress options here
+    };
+
+    dressOverlay.src = dressImages[dressId];
+    dressOverlay.classList.remove('hidden');
+    document.getElementById('top-overlay').classList.add('hidden');
+    document.getElementById('shorts-overlay').classList.add('hidden');
+}
+
+function selectTop(topId) {
+    const topOverlay = document.getElementById('top-overlay');
+
+    const topImages = {
+        'top1': '/static/images/crochet_vest_h&m_fitted.png'
+        // add more top options here
+    };
+
+    topOverlay.src = topImages[topId];
+    topOverlay.classList.remove('hidden');
+    document.getElementById('dress-overlay').classList.add('hidden');
+}
+
+function selectShorts(shortsId) {
+    const shortsOverlay = document.getElementById('shorts-overlay');
+
+    const shortsImages = {
+        'shorts1': '/static/images/black_skort_h&m_fitted.png'
+        // add more shorts options here
+    };
+
+    shortsOverlay.src = shortsImages[shortsId];
+    shortsOverlay.classList.remove('hidden');
+    document.getElementById('dress-overlay').classList.add('hidden');
+}
 

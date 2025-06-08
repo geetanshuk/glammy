@@ -112,6 +112,14 @@ def overlay_top(avatar_json, clothing_json, avatar_img, clothing_img):
     avatar_img.paste(clothing_img, (int(offset_x), int(offset_y)), mask = clothing_img)
 
     avatar_img.show()
+
+def snapping():
+    # define snapping areas close to the avatar
+    snapping_area = 30
+    # if avatar's left shoulder - clothing's left shoulder < snapping area
+    # switch case to call appropriate overlay method
+    
+    return 0
  
 
 
