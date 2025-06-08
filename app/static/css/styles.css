@@ -93,3 +93,35 @@ h1 {
     width: 100%;
     height: auto;
 }
+
+.overlay-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.dress-overlay {
+    width: 100%;
+    pointer-events: none; /* Let mouse events pass through */
+}
+
+.overlay-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 6px 12px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    z-index: 11;
+    display: none;
+    cursor: pointer;
+}
+
+.overlay-wrapper:hover .overlay-button {
+    display: block;
+}
+
