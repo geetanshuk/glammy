@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin-top: 20px;
+    color: #333;
+}
+
+.model-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#model-image {
+    display: block;
+    width: 400px;
+}
+
+.dress-overlay, .top-overlay, .shorts-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.side-buttons {
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 1000;
+}
+
+.glitz-btn {
+    padding: 20px 30px;
+    width: 180px;
+    background: linear-gradient(to right, #ff69b4, #ff1493);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.glitz-btn:hover {
+    transform: scale(1.07);
+    background: linear-gradient(to right, #ff85c1, #ff4fa1);
+}
+
+.dress-options, .top-options, .shorts-options {
+    position: fixed;
+    top: 100px;
+    left: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 999;
+}
+
+.glitz-option {
+    padding: 10px;
+    width: 160px;
+    background: #f8f8f8;
+    border: 2px solid #ff1493;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.glitz-option:hover {
+    background-color: #ffe0f0;
+}
+
+.hidden {
+    display: none;
+}
+
+.glitz-option img {
+    background: transparent;
+    width: 100%;
+    height: auto;
+}
