@@ -13,6 +13,10 @@ window.onclick = function(event) {
     }
 }
 
+function navBar() {
+    
+}
+
 // Load cart from localStorage
 function loadCartFromLocalStorage() {
   const stored = localStorage.getItem('cart');

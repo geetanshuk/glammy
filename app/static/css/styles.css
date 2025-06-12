@@ -168,4 +168,27 @@ h1 {
   to {top: 0; opacity: 1}
 }
 
+.custom-navbar {
+  background: linear-gradient(to right, #ff85c1, #ff4fa1);
+  padding: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.custom-navbar .navbar-brand,
+.custom-navbar .nav-link {
+  color: black !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link.active {
+  color: white !important; /* Gold on hover or active */
+}
+
+.custom-navbar .nav-item {
+  margin-left: 15px;
+}
+
+
 
