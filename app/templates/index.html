@@ -1,50 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Glitz</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+  <meta charset="UTF-8" />
+  <title>Glitz</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </head>
 <body>
-    <h1>Glitz</h1>
+  <h1>Glitz</h1>
 
-    <!-- Model + Clothing Overlay -->
-    <div class="model-container">
-        <img src="{{ url_for('static', filename='images/real_model.png') }}" id="model-image" alt="Model" width="400">
-        <img id="dress-overlay" class="dress-overlay hidden" src="" alt="Selected dress">
-        <img id="top-overlay" class="top-overlay hidden" src="" alt="selected top">
-        <img id="shorts-overlay" class="shorts-overlay hidden" src="" alt="selected shorts">
-    </div>
-
-    <!-- Side Buttons -->
-    <div class="side-buttons">
-        <button onclick="dresses()" class="glitz-btn">Dress</button>
-        <button onclick="tops()" class="glitz-btn">Top</button>
-        <button onclick="shorts()" class="glitz-btn">Shorts</button>
-    </div>
-
-    <!-- Dress Options -->
-    <div id="dress-options" class="dress-options hidden">
-        <div class="glitz-option" onclick="selectDress('dress1')">
-            <img src="{{ url_for('static', filename='images/black_knotted_h&m_fitted.png') }}" alt="Dress 1" width="150">
+  <!-- Modal -->
+  <div class="modal fade" tabindex="-1" role="dialog" id="myModal" aria-hidden="true" aria-labelledby="modalTitle" aria-modal="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Add to Cart</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body" id="checkboxContainer"></div>
+        <div class="modal-footer">
+          <button type="button" id="cart-button" class="btn btn-primary" onclick="addToCart()">Add to cart</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Model + Clothing Overlay -->
+  <div class="model-container">
+    <img src="{{ url_for('static', filename='images/real_model.png') }}" id="model-image" alt="Model" width="400">
+
+    <div id="dress-overlay-wrapper" class="overlay-wrapper hidden">
+      <img id="dress-overlay" class="dress-overlay" src="" alt="Selected dress">
+      <button 
+        id="dress-cart-button" 
+        data-bs-toggle="modal" 
+        data-bs-target="#myModal" 
+        onclick="openModal()"
+        class="overlay-button">
+        Add items to cart
+      </button>
     </div>
 
-    <!-- Top Options -->
-    <div id="top-options" class="top-options hidden">
-        <div class="glitz-option" onclick="selectTop('top1')">
-            <img src="{{ url_for('static', filename='images/crochet_vest_h&m_fitted.png') }}" alt="Top 1" width="150">
-        </div>
+    <div id="top-overlay-wrapper" class="overlay-wrapper hidden">
+      <img id="top-overlay" class="top-overlay" src="" alt="Selected top">
+      <button 
+        id="top-cart-button" 
+        data-bs-toggle="modal" 
+        data-bs-target="#myModal" 
+        onclick="openModal()"
+        class="overlay-button">
+        Add items to cart
+      </button>
     </div>
 
-    <!-- Shorts Options -->
-    <div id="shorts-options" class="shorts-options hidden">
-        <div class="glitz-option" onclick="selectShorts('shorts1')">
-            <img src="{{ url_for('static', filename='images/black_skort_h&m_fitted.png') }}" alt="Shorts 1" width="150">
-        </div>
+    <div id="shorts-overlay-wrapper" class="overlay-wrapper hidden">
+      <img id="shorts-overlay" class="shorts-overlay" src="" alt="Selected shorts">
+      <button 
+        id="shorts-cart-button" 
+        data-bs-toggle="modal" 
+        data-bs-target="#myModal" 
+        onclick="openModal()"
+        class="overlay-button">
+        Add items to cart
+      </button>
     </div>
+  </div>
+
+  <!-- Side Buttons -->
+  <div class="side-buttons">
+    <button onclick="dresses()" class="glitz-btn">Dress</button>
+    <button onclick="tops()" class="glitz-btn">Top</button>
+    <button onclick="shorts()" class="glitz-btn">Shorts</button>
+  </div>
+
+  <!-- Dress Options -->
+  <div id="dress-options" class="dress-options hidden">
+    <div class="glitz-option" onclick="selectDress('dress1')">
+      <img src="{{ url_for('static', filename='images/black_knotted_h&m_fitted.png') }}" alt="Dress 1" width="150">
+    </div>
+  </div>
+
+  <!-- Top Options -->
+  <div id="top-options" class="top-options hidden">
+    <div class="glitz-option" onclick="selectTop('top1')">
+      <img src="{{ url_for('static', filename='images/crochet_vest_h&m_fitted.png') }}" alt="Top 1" width="150">
+    </div>
+  </div>
+
+  <!-- Shorts Options -->
+  <div id="shorts-options" class="shorts-options hidden">
+    <div class="glitz-option" onclick="selectShorts('shorts1')">
+      <img src="{{ url_for('static', filename='images/black_skort_h&m_fitted.png') }}" alt="Shorts 1" width="150">
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle (includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  
 </body>
 </html>
+
 
 

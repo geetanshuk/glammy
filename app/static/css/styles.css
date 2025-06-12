@@ -94,34 +94,78 @@ h1 {
     height: auto;
 }
 
+
 .overlay-wrapper {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
+    height: 100%;
     z-index: 10;
     pointer-events: auto;
 }
 
-.dress-overlay {
+.dress-overlay, .top-overlay, .shorts-overlay {
     width: 100%;
-    pointer-events: none; /* Let mouse events pass through */
+    pointer-events: none;
 }
 
 .overlay-button {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 6px 12px;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 4px;
     z-index: 11;
-    display: none;
+    display: none;  /* stays hidden until hover */
     cursor: pointer;
 }
+
 
 .overlay-wrapper:hover .overlay-button {
     display: block;
 }
+
+/* Modal Header */
+.modal-header {
+  padding: 2px 16px;
+  background-color: #ff1493;
+  color: white;
+  z-index: 9999;
+}
+
+/* Modal Body */
+.modal-body {padding: 2px 16px; z-index: 9999;}
+
+/* Modal Footer */
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #ff1493;
+  color: white;
+  z-index: 9999;
+}
+
+/* Modal Content */
+.modal-content {
+  z-index: 9999;
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
+}
+
 

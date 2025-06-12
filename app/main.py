@@ -4,9 +4,18 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+cart = [
+    {"name": "Black Skort", "image": "/static/images/black_skort_h&m_fitted.png", "quantity": 2, "price": 35.00},
+    {"name": "Crochet Vest", "image": "/static/images/crochet_vest_h&m_fitted.png", "quantity": 1, "price": 45.00},
+]
+
 @app.route("/")
 def index():
     return render_template('index.html')
+
+@app.route("/viewCart")
+def viewCart():
+    return render_template('view_cart.html')
 
 
 @app.route("/dresses")
@@ -50,7 +59,7 @@ def tops():
 
 @app.route("/bottoms")
 def bottoms():
-    tops_data = [
+    bottoms_data = [
         {
             'name': 'Abstract Dream',
             'description': 'A colorful abstract painting',
@@ -65,7 +74,7 @@ def bottoms():
         },
         # Add more paintings here...
     ]
-    return render_template('tops.html', tops=tops_data)
+    return render_template('bottoms.html', bottoms=bottoms_data)
 
 if __name__ == '__main__':
     app.run(debug=True)
